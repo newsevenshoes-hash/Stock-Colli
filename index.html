@@ -87,16 +87,74 @@
                 </div>
             </template>
         </div>
+        <footer class="mt-12 border-t border-gray-200 pt-8 pb-12 text-center">
+    <div class="mb-6 text-[10px] text-gray-400 leading-relaxed uppercase tracking-widest">
+        <p class="font-bold text-gray-600">SEVEN SHOES S.R.L.S.</p>
+        <p>Sede Legale: Via G. e G. Sicuri 3/A - 43124 Parma (Italy) | P.IVA: 02903030340</p>
+        <p>Capitale Sociale: €500 i.v. | REA: PR-276209</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4 text-[11px] font-bold uppercase tracking-tighter text-vintage-dark/60">
+        <button @click="infoSelezionata = 'chi-siamo'" class="hover:text-vintage-pink transition-colors">Chi Siamo</button>
+        <button @click="infoSelezionata = 'resi'" class="hover:text-vintage-pink transition-colors">Politica Resi</button>
+        <button @click="infoSelezionata = 'privacy'" class="hover:text-vintage-pink transition-colors">Privacy</button>
+    </div>
+
+    <div x-show="infoSelezionata" x-cloak 
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+         @click.away="infoSelezionata = null">
+        
+        <div class="bg-white rounded-[2rem] max-w-lg w-full max-h-[80vh] overflow-y-auto p-8 shadow-2xl relative">
+            <button @click="infoSelezionata = null" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl">&times;</button>
+            
+            <div class="prose prose-sm font-sans text-left">
+                <template x-if="infoSelezionata === 'chi-siamo'">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Chi Siamo</h3>
+                        <p>Cosplay & Vintage è il progetto digitale di [Nome SRLS]. Selezioniamo capi unici e stock di qualità per appassionati e professionisti del settore.</p>
+                        <p class="mt-2 text-gray-500">Dopo anni di esperienza nel negozio fisico, oggi ci trovi online con spedizioni in tutta Italia.</p>
+                    </div>
+                </template>
+
+                <template x-if="infoSelezionata === 'resi'">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Politica Resi</h3>
+                        <p>Ai sensi del Codice del Consumo, hai il diritto di recedere dall'acquisto entro <strong>14 giorni</strong> dal ricevimento della merce.</p>
+                        <p class="mt-2">I prodotti devono essere restituiti nelle condizioni originali. Le spese di spedizione per il reso sono a carico dell'acquirente.</p>
+                        <p class="mt-2 font-bold">Nota per gli Stock:</p>
+                        <p class="text-xs italic">Per i lotti Stock Colli (B2B), il reso è regolato dalle condizioni di vendita tra professionisti concordate in fase di fatturazione.</p>
+                    </div>
+                </template>
+
+                <template x-if="infoSelezionata === 'privacy'">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Privacy Policy</h3>
+                        <p>I tuoi dati (nome, indirizzo, telefono) vengono utilizzati esclusivamente per la gestione dell'ordine e la fatturazione elettronica tramite Fatture in Cloud.</p>
+                        <p class="mt-2 text-xs italic">Nessun dato viene ceduto a terzi per scopi pubblicitari. Il titolare del trattamento è Seven Shoes srls.</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</footer>
     </main>
 
     <script>
         function app() {
             return {
-                search: '',
-                colli: [],
-                categoriaSelezionata: 'tutti',
-                admin: false,
-                clickCount: 0,
+        prodotti: [],
+        search: '',
+        categoriaSelezionata: 'tutti',
+        admin: false,
+        clickCount: 0,
+        
+        // --- QUI AGGIUNGIAMO LE INFO LEGALI ---
+        infoSelezionata: null, 
+        testiLegali: {
+            chiSiamo: "Stock Colli è il progetto di Seven Shoes srls. Selezioniamo capi unici e stock di qualità per appassionati e professionisti.",
+            resi: "Diritto di recesso entro 14 giorni. La merce deve essere integra e con cartellino. Spese di spedizione a carico del cliente.",
+            privacy: "I tuoi dati sono trattati esclusivamente per la gestione dell'ordine e la fatturazione elettronica tramite Fatture in Cloud."
+        },
                 // Assicurati che il tuo link CSV sia corretto qui
                 urlCSV: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR1v8A-MQcrejKtWj4khgzF1sjDAeV7ldovUoKUeR-9XJUbodTIrLVOp7z9OMpz88BrtWoEcovnWXP8/pub?output=csv',
                 
