@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Stock Colli Management</title>
+    <title>Stock Colli</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -21,7 +21,7 @@
                 <img src="logo512.png" alt="Logo" class="h-10 w-10 object-contain rounded bg-white p-1">
                 <div>
                     <h1 class="text-xl font-black tracking-tighter uppercase leading-none">Stock Colli</h1>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-blue-400">Inventory Management</p>
+                    
                 </div>
             </div>
             
@@ -98,7 +98,7 @@
                 admin: false,
                 clickCount: 0,
                 // Assicurati che il tuo link CSV sia corretto qui
-                urlCSV: 'INCOLLA_QUI_IL_TUO_LINK_CSV_STOCK_COLLI',
+                urlCSV: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR1v8A-MQcrejKtWj4khgzF1sjDAeV7ldovUoKUeR-9XJUbodTIrLVOp7z9OMpz88BrtWoEcovnWXP8/pub?output=csv',
                 
                 async init() {
                     try {
@@ -114,21 +114,20 @@
                 },
 
                 parseCSV(csv) {
-                    const lines = csv.split(/\r?\n/).filter(line => line.trim() !== '');
-                    return lines.slice(1).map(line => {
-                        // Regex per gestire correttamente le virgole dentro le virgolette
-                        const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
-                        const d = line.split(regex).map(s => s.replace(/^"|"$/g, '').trim());
-                        return {
-                            id: d[0] || '',
-                            descrizione: d[1] || '',
-                            categoria: d[2] || 'Vario', // La nuova colonna!
-                            pezzi: d[3] || '0',
-                            prezzo: d[4] || '0',
-                            foto: d[5] || ''
-                        };
-                    });
-                },
+    const lines = csv.split(/\r?\n/).filter(line => line.trim() !== '');
+    return lines.slice(1).map(line => {
+        const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
+        const d = line.split(regex).map(s => s.replace(/^"|"$/g, '').trim());
+        return {
+            id: d[0] || '',          // Numero Collo
+            descrizione: d[1] || '', // Contenuto
+            categoria: d[2] || '',   // Categoria 
+            pezzi: d[3] || '0',      // Pezzi 
+            prezzo: d[4] || '0',     // Prezzo 
+            foto: d[5] || ''         // Foto 
+        };
+    });
+},
 
                 getCategorie() {
                     const cats = this.colli.map(c => c.categoria);
@@ -150,6 +149,7 @@
     </script>
 </body>
 </html>
+
 
 
 
